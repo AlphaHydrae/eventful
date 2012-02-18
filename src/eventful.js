@@ -11,7 +11,7 @@
   };
 
   EventEmitter.prototype.on = function(eventName, callback, options) {
-    this._checkEventName(eventName);
+    Validator.checkEventName(eventName);
     if (!this._callbacks[eventName]) {
       this._callbacks[eventName] = [];
     }
@@ -74,17 +74,11 @@
         return true;
       }
     });
-  },
-
-  EventEmitter.prototype._checkEventName = function(eventName) {
-    if (typeof(eventName) != 'string' || !eventName.match(/^\w+$/i)) {
-      throw new Error('Event names must be non-empty word strings.');
-    }
   };
 
   function EventfulCallback(emitter, callback, eventName, options) {
 
-    this._checkCallback(callback);
+    Validator.checkCallback(callback);
 
     this.emitter = emitter;
     this.callback = callback;
@@ -121,12 +115,6 @@
     return this.eventName == ev.eventName;
   };
 
-  EventfulCallback.prototype._checkCallback = function(callback) {
-    if (typeof(callback) != 'function') {
-      throw new Error('Event callbacks must be functions.');
-    }
-  };
-
   function EventfulEvent(emitter, eventName) {
     this.emitter = emitter;
     this.eventName = eventName;
@@ -134,6 +122,21 @@
 
   EventfulEvent.prototype.shouldFire = function(callback) {
     return true;
+  };
+
+  var Validator = {
+
+    checkEventName : function(eventName) {
+      if (typeof(eventName) != 'string' || !eventName.match(/^\w+$/i)) {
+        throw new Error('Event names must be non-empty word strings.');
+      }
+    },
+
+    checkCallback : function(callback) {
+      if (typeof(callback) != 'function') {
+        throw new Error('Event callbacks must be functions.');
+      }
+    }
   };
 
   exports.EventEmitter = EventEmitter;
