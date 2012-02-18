@@ -5,7 +5,7 @@
  */
 
 (function(exports){
-
+  
   function EventEmitter() {
     this._callbacks = {};
   };
