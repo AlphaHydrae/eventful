@@ -8,6 +8,8 @@
 
 (function(exports){
 
+  /*global module:true */
+
   'use strict';
   
   function EventEmitter() {
