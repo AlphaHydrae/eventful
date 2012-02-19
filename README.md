@@ -30,6 +30,49 @@ In node:
 
 ## Features
 
+All methods can be **chained**.
+
+```js
+ee.on('foo', function() {
+  console.log('The foo event was emitted.');
+}).on('bar', function() {
+  console.log('The bar event was emitted.');
+}).emit('foo').emit('bar');;
+```
+
+You can **remove callbacks** with the off method.
+
+```js
+var fooCallback = function() {
+  console.log('The foo event was emitted.');
+};
+
+var barCallback = function() {
+  console.log('The bar event was emitted.');
+};
+
+ee.on('foo', fooCallback).on('bar', barCallback);
+
+// you can remove a specific callback
+ee.off('foo', fooCallback);
+
+// or you can remove all callbacks for the foo event
+ee.off('foo');
+
+// nothing happens any more with the foo event
+ee.emit('foo');
+
+// the bar callback is still registered
+ee.emit('bar'); // #=> "The bar event was emitted."
+
+// finally, you can also remove all callbacks
+ee.off();
+
+// nothing happens with any event
+ee.emit('bar');
+
+```
+
 When emitting events, any additional **arguments** after the event name are passed to registered callbacks.
 
 ```js
