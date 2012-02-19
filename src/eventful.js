@@ -97,6 +97,7 @@
 
       if (result === false) {
         i -= 1;
+        n -= 1;
       } else if (result === true) {
         break;
       }
