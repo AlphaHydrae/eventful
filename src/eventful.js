@@ -15,7 +15,7 @@
     if (!this._callbacks[eventName]) {
       this._callbacks[eventName] = [];
     }
-    this._callbacks[eventName].push(new EventfulCallback(this, callback, eventName, options));
+    this._callbacks[eventName].push(this._wrapCallback(callback, eventName, options));
   };
 
   EventEmitter.prototype.off = function(eventName, callbackToRemove) {
@@ -29,7 +29,7 @@
 
   EventEmitter.prototype.emit = function(eventName) {
     var args = Array.prototype.slice.call(arguments, 1)
-    this._fireCallbacks(new EventfulEvent(this, eventName), args);
+    this._fireCallbacks(this._wrapEvent(eventName), args);
   };
 
   EventEmitter.prototype._fireCallbacks = function(eventObject, args) {
@@ -76,6 +76,14 @@
     });
   };
 
+  EventEmitter.prototype._wrapCallback = function(callback, eventName, options) {
+    return new EventfulCallback(this, callback, eventName, options);
+  };
+
+  EventEmitter.prototype._wrapEvent = function(eventName) {
+    return new EventfulEvent(this, eventName);
+  };
+
   function EventfulCallback(emitter, callback, eventName, options) {
 
     Validator.checkCallback(callback);
@@ -112,7 +120,7 @@
   };
 
   EventfulCallback.prototype.shouldBeFired = function(ev) {
-    return this.eventName == ev.eventName;
+    return true;
   };
 
   function EventfulEvent(emitter, eventName) {
