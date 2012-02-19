@@ -18,6 +18,20 @@ ee.on('foo', fooCallback);
 ee.emit('foo'); // #=> "The foo event was emitted."
 ```
 
+## Installation
+
+In a browser:
+
+    <script type='text/javascript' src='/assets/js/eventful.min.js'></script>
+
+In node:
+
+    var EventEmitter = require('./lib/eventful.js');
+
+## Features
+
+Overview of eventful's features.
+
 ## License (MIT)
 
 Copyright (c) 2011 Alpha Hydrae
