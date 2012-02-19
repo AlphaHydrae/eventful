@@ -1,5 +1,5 @@
 /*!
- * eventful v0.1
+ * eventful v0.2
  * https://github.com/AlphaHydrae/eventful
  *
  * Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
