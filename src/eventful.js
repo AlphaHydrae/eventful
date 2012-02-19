@@ -11,7 +11,7 @@
   };
 
   EventEmitter.prototype.on = function(eventName, callback, options) {
-    Validator.checkEventName(eventName);
+    _checkEventName(eventName);
     if (!this._callbacks[eventName]) {
       this._callbacks[eventName] = [];
     }
@@ -55,6 +55,10 @@
     var args = Array.prototype.slice.call(arguments, 1)
     this._fireCallbacks(this._wrapEvent(eventName), args);
     return this;
+  };
+
+  EventEmitter.prototype.withNamespace = function(namespace) {
+    return new EventfulNamespace(this, namespace);
   };
 
   EventEmitter.prototype._fireCallbacks = function(eventObject, args) {
@@ -115,7 +119,7 @@
 
   function EventfulCallback(emitter, callback, eventName, options) {
 
-    Validator.checkCallback(callback);
+    _checkCallback(callback);
 
     this.emitter = emitter;
     this.callback = callback;
@@ -160,21 +164,68 @@
   EventfulEvent.prototype.shouldFire = function(callback) {
     return true;
   };
+  
+  function fubarFunction() {
+    console.log('fubar');
+  };
 
-  var Validator = {
+  function _checkEventName(eventName) {
+    if (typeof(eventName) != 'string' || !eventName.match(/^\w+$/i)) {
+      throw new Error('Event names must be non-empty word strings.');
+    }
+  };
 
-    checkEventName : function(eventName) {
-      if (typeof(eventName) != 'string' || !eventName.match(/^\w+$/i)) {
-        throw new Error('Event names must be non-empty word strings.');
-      }
-    },
+  function _checkCallback(callback) {
+    if (typeof(callback) != 'function') {
+      throw new Error('Event callbacks must be functions.');
+    }
+  };
 
-    checkCallback : function(callback) {
-      if (typeof(callback) != 'function') {
-        throw new Error('Event callbacks must be functions.');
+  function _extend(parentClass, childClass) {
+    for (var method in parentClass.prototype) {
+      if (method.match(/^_?[a-z]/)) {
+        childClass.prototype[method] = parentClass.prototype[method];
       }
     }
   };
+
+  function EventfulNamespace(emitter, namespace) {
+    this._emitter = emitter;
+    this._namespace = namespace;
+    this._callbacks = this._emitter._callbacks;
+  };
+
+  _extend(EventEmitter, EventfulNamespace);
+
+  EventfulNamespace.prototype.withNamespace = function(namespace) {
+    return new EventfulNamespace(this._emitter, namespace);
+  };
+
+  EventfulNamespace.prototype._wrapCallback = function(callback, eventName, options) {
+    return new EventfulNamespacedCallback(this._namespace, this, callback, eventName, options);
+  };
+
+  EventfulNamespace.prototype._wrapEvent = function(eventName) {
+    return new EventfulNamespacedEvent(this._namespace, this, eventName);
+  };
+
+  function EventfulNamespacedCallback(namespace, emitter, callback, eventName, options) {
+    EventfulCallback.call(this, emitter, callback, eventName, options);
+    this.namespace = namespace;
+  }
+
+  _extend(EventfulCallback, EventfulNamespacedCallback);
+
+  EventfulNamespacedCallback.prototype.shouldBeFired = function(ev) {
+    return this.namespace == ev.namespace;
+  };
+
+  function EventfulNamespacedEvent(namespace, emitter, eventName) {
+    EventfulEvent.call(this, emitter, eventName);
+    this.namespace = namespace;
+  }
+
+  _extend(EventfulEvent, EventfulNamespacedEvent);
 
   exports.EventEmitter = EventEmitter;
 
