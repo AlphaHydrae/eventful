@@ -2,7 +2,7 @@
 
 **Event-based javascript.**
 
-My personal flavor of a javascript event emitter. It can be used to listen to and emit events for event-based behavior.
+My personal flavor of a javascript event emitter. It can be used to listen to and emit events for event-based behavior in the browser or in <a href="http://nodejs.org/">node.js</a>.
 
 This readme contains installation instructions and an overview of <a href="#features">features</a>.
 
