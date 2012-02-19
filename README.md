@@ -18,7 +18,7 @@ ee.on('foo', fooCallback);
 ee.emit('foo'); // #=> "The foo event was emitted."
 ```
 
-<a href="#fubar">Jump</a>
+For an overview of features, read <a href="#features">Features</a> below. Detailed API documentation will be coming soon.
 
 ## Installation
 
@@ -30,8 +30,12 @@ In node:
 
     var EventEmitter = require('./lib/eventful.js');
 
+<a name="features"></a>
 ## Features
 
+Jump to <a href="#feature_chaining">chaining</a>, <a href="#feature_off">removing callbacks</a>, <a href="#feature_arguments">passing arguments</a>.
+
+<a name="feature_chaining"></a>
 All methods can be **chained**.
 
 ```js
@@ -42,7 +46,7 @@ ee.on('foo', function() {
 }).emit('foo').emit('bar');;
 ```
 
-<a name="fubar"></a>
+<a name="feature_off"></a>
 You can **remove callbacks** with the off method.
 
 ```js
@@ -77,6 +81,7 @@ ee.emit('bar');
 
 ```
 
+<a name="feature_arguments"></a>
 When emitting events, any additional **arguments** after the event name are passed to registered callbacks.
 
 ```js
