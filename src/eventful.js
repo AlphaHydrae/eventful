@@ -16,6 +16,7 @@
       this._callbacks[eventName] = [];
     }
     this._callbacks[eventName].push(this._wrapCallback(callback, eventName, options));
+    return this;
   };
 
   EventEmitter.prototype.off = function(eventName, callbackToRemove) {
@@ -25,11 +26,13 @@
         return false;
       }
     });
+    return this;
   };
 
   EventEmitter.prototype.emit = function(eventName) {
     var args = Array.prototype.slice.call(arguments, 1)
     this._fireCallbacks(this._wrapEvent(eventName), args);
+    return this;
   };
 
   EventEmitter.prototype._fireCallbacks = function(eventObject, args) {
