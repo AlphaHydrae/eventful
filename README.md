@@ -4,7 +4,7 @@
 
 My personal flavor of a javascript event emitter. It can be used to listen to and emit events for event-based behavior in the browser or in <a href="http://nodejs.org/">node.js</a>.
 
-This readme contains installation instructions and an overview of <a href="#features">features</a>.
+This readme contains <a href="#installation">installation</a> instructions and an overview of <a href="#features">features</a>.
 
 ```js
 // initialize an event emitter
@@ -24,6 +24,7 @@ ee.emit('foo'); // #=> "The foo event was emitted."
 
 For an overview of features, read <a href="#features">Features</a> below. Detailed API documentation will be coming soon.
 
+<a name="installation"></a>
 ## Installation
 
 In a browser:
