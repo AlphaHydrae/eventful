@@ -1,7 +1,9 @@
-/**
- * Event-based javascript.
- * 
- * @author Alpha Hydrae (hydrae.alpha@gmail.com)
+/*!
+ * eventful v0.2
+ * https://github.com/AlphaHydrae/eventful
+ *
+ * Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
+ * Alpha Hydrae (hydrae.alpha@gmail.com)
  */
 
 (function(exports){
@@ -12,6 +14,15 @@
 
   EventEmitter.prototype.on = function(eventName, callback, options) {
     _checkEventName(eventName);
+
+    if (typeof(callback) == 'undefined' && typeof(options) == 'undefined') {
+      var callbacks = [];
+      this._eachCallback(eventName, function(c) {
+        callbacks.push(c.callback);
+      });
+      return callbacks;
+    }
+
     if (!this._callbacks[eventName]) {
       this._callbacks[eventName] = [];
     }
@@ -40,7 +51,7 @@
     this._eachCallback(eventName, function(callback, index) {
       if (callback.callback === callbackToRemove) {
         this._callbacks[eventName].splice(index, 1);
-        return false;
+        return -1;
       }
     });
 
@@ -86,14 +97,11 @@
       
       result = callback.call(this, this._callbacks[eventName][i], i);
 
-      if (result === false) {
-        i -= 1;
-      } else if (result === true) {
+      if (typeof(result) == 'number') {
+        i += result;
+        n += result;
+      } else if (result === false) {
         break;
-      }
-
-      if (this._callbacks[eventName].length <= 0) {
-        return this;
       }
     }
 
@@ -108,7 +116,7 @@
     this._eachCallback(eventName, function(callback, index) {
       if (callback === callbackToRemove) {
         this._callbacks[eventName].splice(index, 1);
-        return true;
+        return false;
       }
     });
   };
@@ -235,6 +243,10 @@
 
   _extend(EventfulEvent, EventfulNamespacedEvent);
 
-  exports.EventEmitter = EventEmitter;
+  if (typeof(module) == 'object') {
+    module.exports = EventEmitter;
+  } else {
+    exports.EventEmitter = EventEmitter;
+  }
 
 })(this);
