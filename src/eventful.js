@@ -20,12 +20,34 @@
   };
 
   EventEmitter.prototype.off = function(eventName, callbackToRemove) {
+
+    if (typeof(eventName) == 'undefined') {
+      for (var eventName in this._callbacks) {
+        this._removeAllCallbacks(eventName);
+      }
+      return this;
+    }
+
+    if (!this._callbacks[eventName]) {
+      return this;
+    }
+
+    if (typeof(callbackToRemove) == 'undefined') {
+      this._removeAllCallbacks(eventName);
+      return this;
+    }
+
     this._eachCallback(eventName, function(callback, index) {
       if (callback.callback === callbackToRemove) {
         this._callbacks[eventName].splice(index, 1);
         return false;
       }
     });
+
+    if (this._callbacks[eventName].length <= 0) {
+      this._removeAllCallbacks(eventName);
+    }
+
     return this;
   };
 
@@ -70,7 +92,11 @@
     return this;
   };
 
-  EventEmitter.prototype._remove = function(eventName, callbackToRemove) {
+  EventEmitter.prototype._removeAllCallbacks = function(eventName) {
+    delete this._callbacks[eventName];
+  };
+
+  EventEmitter.prototype._removeCallback = function(eventName, callbackToRemove) {
     this._eachCallback(eventName, function(callback, index) {
       if (callback === callbackToRemove) {
         this._callbacks[eventName].splice(index, 1);
@@ -107,7 +133,7 @@
       this.callAsFunction(args);
     }
     if (this.once) {
-      this.emitter._remove(this.eventName, this);
+      this.emitter._removeCallback(this.eventName, this);
     }
   };
 
