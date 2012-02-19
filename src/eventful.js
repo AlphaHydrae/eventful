@@ -61,6 +61,10 @@
     return new EventfulNamespace(this, namespace);
   };
 
+  EventEmitter.prototype.withoutNamespace = function() {
+    return this;
+  };
+
   EventEmitter.prototype._fireCallbacks = function(eventObject, args) {
     this._eachCallback(eventObject.eventName, function(callback, index) {
       if (eventObject.shouldFire(callback) && callback.shouldBeFired(eventObject)) {
@@ -199,6 +203,10 @@
 
   EventfulNamespace.prototype.withNamespace = function(namespace) {
     return new EventfulNamespace(this._emitter, namespace);
+  };
+
+  EventfulNamespace.prototype.withoutNamespace = function() {
+    return this._emitter;
   };
 
   EventfulNamespace.prototype._wrapCallback = function(callback, eventName, options) {
