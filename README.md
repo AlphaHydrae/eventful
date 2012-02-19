@@ -22,7 +22,7 @@ ee.on('foo', fooCallback);
 ee.emit('foo'); // #=> "The foo event was emitted."
 ```
 
-For an overview of features, read <a href="#features">Features</a> below. Detailed API documentation will be coming soon.
+Detailed API documentation will be coming soon.
 
 <a name="installation"></a>
 ## Installation
