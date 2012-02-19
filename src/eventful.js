@@ -101,10 +101,6 @@
       } else if (result === true) {
         break;
       }
-
-      if (this._callbacks[eventName].length <= 0) {
-        return this;
-      }
     }
 
     return this;
