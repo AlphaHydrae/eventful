@@ -1,7 +1,9 @@
-/**
- * Event-based javascript.
- * 
- * @author Alpha Hydrae (hydrae.alpha@gmail.com)
+/*!
+ * eventful v0.1
+ * https://github.com/AlphaHydrae/eventful
+ *
+ * Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
+ * Alpha Hydrae (hydrae.alpha@gmail.com)
  */
 
 (function(exports){
