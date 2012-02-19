@@ -30,7 +30,15 @@ In node:
 
 ## Features
 
-Overview of eventful's features.
+When emitting events, any additional **arguments** after the event name are passed to registered callbacks.
+
+```js
+ee.on('foo', function(arg) {
+  console.log('I was called with ' + arg + '.');
+});
+
+ee.emit('foo', 'bar'); // #=> "I was called with bar."
+```
 
 ## License (MIT)
 
