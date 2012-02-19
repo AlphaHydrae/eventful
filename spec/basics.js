@@ -42,18 +42,30 @@ vows.describe('Basics').addBatch({
 
   'An event emitter with a callback on foo' : {
     topic : function() {
-      new EventEmitter().on('foo', this.callback).emit('foo');
+      
+      var called = false;
+
+      new EventEmitter().on('foo', function() {
+        called = true;
+      }).emit('foo');
+
+      return called;
     },
 
-    'should call it back when emitting foo' : function() {}
+    'should call it back when emitting foo' : function(topic) {
+      assert.isTrue(topic);
+    }
   },
 
   'An event emitter with a callback on bar' : {
     topic : function() {
+
       var called = false;
+
       new EventEmitter().on('bar', function() {
         called = true;
       }).emit('foo');
+
       return called;
     },
 
