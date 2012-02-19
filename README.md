@@ -22,16 +22,26 @@ ee.on('foo', fooCallback);
 ee.emit('foo'); // #=> "The foo event was emitted."
 ```
 
-Detailed API documentation will be coming soon.
+Dtailed API documentation will be coming soon.
 
 <a name="installation"></a>
 ## Installation
 
-In a browser:
+Downloads:
 
+* <a href="https://raw.github.com/AlphaHydrae/eventful/master/src/eventful.min.js">Compressed</a>
+* <a href="https://raw.github.com/AlphaHydrae/eventful/master/src/eventful.js">Uncompressed</a>
+* <a href="https://github.com/AlphaHydrae/eventful/zipball/master">Full Project Zip</a>
+
+How to use in a browser:
+
+    <!-- direct link -->
+    <script type='text/javascript' src='https://raw.github.com/AlphaHydrae/eventful/master/src/eventful.min.js'></script>
+
+    <!-- or with downloaded file -->
     <script type='text/javascript' src='/assets/js/eventful.min.js'></script>
 
-In node:
+How to use in node:
 
     var EventEmitter = require('./lib/eventful.js');
 
