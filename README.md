@@ -2,7 +2,21 @@
 
 Event-based javascript.
 
-More to come...
+```js
+// initialize an event emitter
+var ee = new EventEmitter();
+
+// create a callback function
+var fooCallback = function() {
+  console.log('The foo event was emitted.');
+};
+
+// register the callback
+ee.on('foo', fooCallback);
+
+// emit the event
+ee.emit('foo'); // #=> "The foo event was emitted."
+```
 
 ## Copyright
 
