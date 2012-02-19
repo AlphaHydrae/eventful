@@ -50,16 +50,15 @@ vows.describe('Basics').addBatch({
 
   'An event emitter with a callback on bar' : {
     topic : function() {
-      var ee = new EventEmitter();
-      ee.barCalled = false;
-      ee.on('bar', function() {
-        ee.barCalled = true;
+      var called = false;
+      new EventEmitter().on('bar', function() {
+        called = true;
       }).emit('foo');
-      return ee;
+      return called;
     },
 
     'should not call it back when emitting foo' : function(topic) {
-      assert.isFalse(topic.barCalled);
+      assert.isFalse(topic);
     }
   },
 
@@ -73,6 +72,30 @@ vows.describe('Basics').addBatch({
       assert.equal(arg2, 'a');
       assert.equal(arg3, 'r');
     }
+  },
+
+  'An event emitter with several callbacks on foo' : {
+    topic : function() {
+
+      var counter = 0;
+
+      function add(n) {
+        return function() {
+          counter += n;
+        };
+      };
+
+      new EventEmitter().on('foo', add(1)).on('foo', add(2)).on('foo', add(3)).emit('foo');
+      return counter;
+    },
+
+    'should call them all' : function(topic) {
+      assert.equal(topic, 6);
+    }
   }
+
+  // MISSING SPECS
+  // - off
+  // - options (once, scope, klass)
 
 }).export(module);
