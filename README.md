@@ -38,6 +38,7 @@ Jump to:
 * <a href="#feature_chaining">chaining</a>
 * <a href="#feature_off">removing callbacks</a>
 * <a href="#feature_arguments">passing arguments</a>
+* <a href="#feature_listing">listing callbacks</a>
 
 <a name="feature_chaining"></a>
 All methods can be **chained**.
@@ -51,7 +52,7 @@ ee.on('foo', function() {
 ```
 
 <a name="feature_off"></a>
-You can **remove callbacks** with the off method.
+You can **remove callbacks** with the `off` method.
 
 ```js
 var fooCallback = function() {
@@ -94,6 +95,20 @@ ee.on('foo', function(arg) {
 });
 
 ee.emit('foo', 'bar'); // #=> "I was called with bar."
+```
+
+<a name="feature_listing"></a>
+The `on` method can be used to retrieve the **list of callbacks** registered for a given event.
+
+```js
+// register your callbacks
+ee.on('fubar', fooCallback).on('fubar', barCallback);
+
+// get the list of registered callbacks
+var callbacks = ee.on('fubar');
+
+// check its contents
+console.log(callbacks.length); // #=> 2
 ```
 
 ## License (MIT)
