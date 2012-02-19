@@ -49,7 +49,7 @@
     this._eachCallback(eventName, function(callback, index) {
       if (callback.callback === callbackToRemove) {
         this._callbacks[eventName].splice(index, 1);
-        return false;
+        return -1;
       }
     });
 
@@ -95,10 +95,10 @@
       
       result = callback.call(this, this._callbacks[eventName][i], i);
 
-      if (result === false) {
-        i -= 1;
-        n -= 1;
-      } else if (result === true) {
+      if (typeof(result) == 'number') {
+        i += result;
+        n += result;
+      } else if (result === false) {
         break;
       }
     }
@@ -114,7 +114,7 @@
     this._eachCallback(eventName, function(callback, index) {
       if (callback === callbackToRemove) {
         this._callbacks[eventName].splice(index, 1);
-        return true;
+        return false;
       }
     });
   };
