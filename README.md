@@ -1,6 +1,10 @@
 # eventful
 
-Event-based javascript.
+**Event-based javascript.**
+
+My personal flavor of a javascript event emitter. It can be used to listen to and emit events for event-based behavior.
+
+This readme contains installation instructions and an overview of <a href="#features">features</a>.
 
 ```js
 // initialize an event emitter
