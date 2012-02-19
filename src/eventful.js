@@ -7,15 +7,17 @@
  */
 
 (function(exports){
+
+  'use strict';
   
   function EventEmitter() {
     this._callbacks = {};
-  };
+  }
 
   EventEmitter.prototype.on = function(eventName, callback, options) {
     _checkEventName(eventName);
 
-    if (typeof(callback) == 'undefined' && typeof(options) == 'undefined') {
+    if (typeof(callback) === 'undefined' && typeof(options) === 'undefined') {
       var callbacks = [];
       this._eachCallback(eventName, function(c) {
         callbacks.push(c.callback);
@@ -32,9 +34,11 @@
 
   EventEmitter.prototype.off = function(eventName, callbackToRemove) {
 
-    if (typeof(eventName) == 'undefined') {
-      for (var eventName in this._callbacks) {
-        this._removeAllCallbacks(eventName);
+    if (typeof(eventName) === 'undefined') {
+      for (var name in this._callbacks) {
+        if (this._callbacks.hasOwnProperty(name)) {
+          this._removeAllCallbacks(name);
+        }
       }
       return this;
     }
@@ -43,7 +47,7 @@
       return this;
     }
 
-    if (typeof(callbackToRemove) == 'undefined') {
+    if (typeof(callbackToRemove) === 'undefined') {
       this._removeAllCallbacks(eventName);
       return this;
     }
@@ -63,7 +67,7 @@
   };
 
   EventEmitter.prototype.emit = function(eventName) {
-    var args = Array.prototype.slice.call(arguments, 1)
+    var args = Array.prototype.slice.call(arguments, 1);
     this._fireCallbacks(this._wrapEvent(eventName), args);
     return this;
   };
@@ -97,7 +101,7 @@
       
       result = callback.call(this, this._callbacks[eventName][i], i);
 
-      if (typeof(result) == 'number') {
+      if (typeof(result) === 'number') {
         i += result;
         n += result;
       } else if (result === false) {
@@ -139,7 +143,7 @@
     this.scope = options && options.scope ? options.scope : undefined;
     this.once = options ? !!options.once : undefined;
     this.klass = options ? !!options.klass : undefined;
-  };
+  }
 
   EventfulCallback.prototype.callIt = function() {
     var args = Array.prototype.slice.call(arguments);
@@ -158,9 +162,9 @@
   };
 
   EventfulCallback.prototype.callAsClass = function(args) {
-    var tmp = function(){};
-    tmp.prototype = this.callback.prototype;
-    var instance = new tmp;
+    var Tmp = function(){};
+    Tmp.prototype = this.callback.prototype;
+    var instance = new Tmp();
     this.callback.apply(instance, args);
   };
 
@@ -171,27 +175,23 @@
   function EventfulEvent(emitter, eventName) {
     this.emitter = emitter;
     this.eventName = eventName;
-  };
+  }
 
   EventfulEvent.prototype.shouldFire = function(callback) {
     return true;
   };
   
-  function fubarFunction() {
-    console.log('fubar');
-  };
-
   function _checkEventName(eventName) {
-    if (typeof(eventName) != 'string' || !eventName.match(/^\w+$/i)) {
+    if (typeof(eventName) !== 'string' || !eventName.match(/^\w+$/i)) {
       throw new Error('Event names must be non-empty word strings.');
     }
-  };
+  }
 
   function _checkCallback(callback) {
-    if (typeof(callback) != 'function') {
+    if (typeof(callback) !== 'function') {
       throw new Error('Event callbacks must be functions.');
     }
-  };
+  }
 
   function _extend(parentClass, childClass) {
     for (var method in parentClass.prototype) {
@@ -199,13 +199,13 @@
         childClass.prototype[method] = parentClass.prototype[method];
       }
     }
-  };
+  }
 
   function EventfulNamespace(emitter, namespace) {
     this._emitter = emitter;
     this._namespace = namespace;
     this._callbacks = this._emitter._callbacks;
-  };
+  }
 
   _extend(EventEmitter, EventfulNamespace);
 
@@ -233,7 +233,7 @@
   _extend(EventfulCallback, EventfulNamespacedCallback);
 
   EventfulNamespacedCallback.prototype.shouldBeFired = function(ev) {
-    return this.namespace == ev.namespace;
+    return this.namespace === ev.namespace;
   };
 
   function EventfulNamespacedEvent(namespace, emitter, eventName) {
@@ -243,7 +243,7 @@
 
   _extend(EventfulEvent, EventfulNamespacedEvent);
 
-  if (typeof(module) == 'object') {
+  if (typeof(module) === 'object') {
     module.exports = EventEmitter;
   } else {
     exports.EventEmitter = EventEmitter;
