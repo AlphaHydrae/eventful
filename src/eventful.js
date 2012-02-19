@@ -12,6 +12,15 @@
 
   EventEmitter.prototype.on = function(eventName, callback, options) {
     _checkEventName(eventName);
+
+    if (typeof(callback) == 'undefined' && typeof(options) == 'undefined') {
+      var callbacks = [];
+      this._eachCallback(eventName, function(c) {
+        callbacks.push(c.callback);
+      });
+      return callbacks;
+    }
+
     if (!this._callbacks[eventName]) {
       this._callbacks[eventName] = [];
     }

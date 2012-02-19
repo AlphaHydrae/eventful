@@ -21,11 +21,13 @@ vows.describe('Basics').addBatch({
 
     'when called' : {
       topic : function(ee) {
+
         var chainOne = ee.on('foo', function() {});
         var chainTwo = chainOne.off('foo');
         var chainThree = chainTwo.emit('foo');
         var chainFour = chainThree.withoutNamespace();
         // withNamespace is not tested as it returns a wrapper
+
         return {
           original: ee,
           chain: [ chainOne, chainTwo, chainThree, chainFour ]
@@ -161,6 +163,31 @@ vows.describe('Basics').addBatch({
 
     'should not call any of them' : function(topic) {
       assert.isFalse(topic);
+    }
+  },
+
+  'An event emitter with callbacks on foo' : {
+    topic : function() {
+
+      var data = {
+        emitter: new EventEmitter(),
+        callbacks: [ function() {}, function() {} ]
+      };
+
+      for (var i in data.callbacks) {
+        data.emitter.on('foo', data.callbacks[i]);
+      }
+
+      return data;
+    },
+
+    'should return them when on is called with only foo' : function(topic) {
+    
+      var callbacks = topic.emitter.on('foo');
+
+      for (var i in topic.callbacks) {
+        assert.strictEqual(callbacks[i], topic.callbacks[i]);
+      }
     }
   }
 

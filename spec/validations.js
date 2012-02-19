@@ -12,7 +12,8 @@ vows.describe('Validations').addBatch({
     },
 
     'should only accept functions as callbacks' : function(topic) {
-      var invalid = [ undefined, null, true, false, 2, 'string', [], {} ];
+      // undefined is not tested as calling on with only an event name is allowed
+      var invalid = [ null, true, false, 2, 'string', [], {} ];
       for (var i in invalid) {
         assert.throws(function() { topic.on('foo', invalid[i]); }, Error);
       }
