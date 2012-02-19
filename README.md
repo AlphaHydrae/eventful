@@ -18,6 +18,8 @@ ee.on('foo', fooCallback);
 ee.emit('foo'); // #=> "The foo event was emitted."
 ```
 
+<a href="#fubar">Jump</a>
+
 ## Installation
 
 In a browser:
@@ -40,6 +42,7 @@ ee.on('foo', function() {
 }).emit('foo').emit('bar');;
 ```
 
+<a name="fubar"></a>
 You can **remove callbacks** with the off method.
 
 ```js
@@ -51,6 +54,7 @@ var barCallback = function() {
   console.log('The bar event was emitted.');
 };
 
+// register both callbacks
 ee.on('foo', fooCallback).on('bar', barCallback);
 
 // you can remove a specific callback
@@ -65,7 +69,7 @@ ee.emit('foo');
 // the bar callback is still registered
 ee.emit('bar'); // #=> "The bar event was emitted."
 
-// finally, you can also remove all callbacks
+// finally, you can also remove all callbacks like this
 ee.off();
 
 // nothing happens with any event
