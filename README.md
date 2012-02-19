@@ -33,7 +33,10 @@ In node:
 <a name="features"></a>
 ## Features
 
-Jump to <a href="#feature_chaining">chaining</a>, <a href="#feature_off">removing callbacks</a>, <a href="#feature_arguments">passing arguments</a>.
+Jump to:
+* <a href="#feature_chaining">chaining</a>
+* <a href="#feature_off">removing callbacks</a>
+* <a href="#feature_arguments">passing arguments</a>
 
 <a name="feature_chaining"></a>
 All methods can be **chained**.
