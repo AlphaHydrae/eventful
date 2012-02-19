@@ -241,6 +241,10 @@
 
   _extend(EventfulEvent, EventfulNamespacedEvent);
 
-  exports.EventEmitter = EventEmitter;
+  if (typeof(module) == 'object') {
+    module.exports = EventEmitter;
+  } else {
+    exports.EventEmitter = EventEmitter;
+  }
 
 })(this);

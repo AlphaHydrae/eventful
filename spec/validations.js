@@ -2,7 +2,7 @@
 var assert = require('assert');
 var vows = require('vows');
 
-var EventEmitter = require('../src/eventful.js').EventEmitter;
+var EventEmitter = require('../src/eventful.js');
 
 vows.describe('Validations').addBatch({
 
