@@ -92,10 +92,64 @@ vows.describe('Basics').addBatch({
     'should call them all' : function(topic) {
       assert.equal(topic, 6);
     }
-  }
+  },
 
-  // MISSING SPECS
-  // - off
-  // - options (once, scope, klass)
+  'An event emitter with a removed callback' : {
+    topic : function() {
+
+      var called = false;
+
+      function callFoo() {
+        called = true;
+      };
+
+      new EventEmitter().on('foo', callFoo).off('foo', callFoo).emit('foo');
+      return called;
+    },
+
+    'should not call it' : function(topic) {
+      assert.isFalse(topic);
+    }
+  },
+
+  'An event emitter with all callbacks removed for foo' : {
+    topic : function() {
+
+      var called = false;
+
+      function callFoo() {
+        return function() {
+          called = true;
+        }
+      };
+
+      new EventEmitter().on('foo', callFoo()).on('foo', callFoo()).off('foo').emit('foo');
+      return called;
+    },
+
+    'should not call any of them when foo is emitted' : function(topic) {
+      assert.isFalse(topic);
+    }
+  },
+
+  'An event emitter with all callbacks removed' : {
+    topic : function() {
+
+      var called = false;
+
+      function callAny() {
+        return function() {
+          called = true;
+        }
+      };
+
+      new EventEmitter().on('foo', callAny()).on('bar', callAny()).off().emit('foo').emit('bar');
+      return called;
+    },
+
+    'should not call any of them' : function(topic) {
+      assert.isFalse(topic);
+    }
+  }
 
 }).export(module);
