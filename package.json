@@ -1,0 +1,32 @@
+{
+  "name": "eventful",
+  "description": "Event-based javascript.",
+  "keywords": [
+    "event emitter",
+    "javascript",
+    "eventful"
+  ],
+  "version": "0.3.1",
+  "homepage": "https://github.com/AlphaHydrae/eventful",
+  "author": "Alpha Hydrae (hydrae.alpha@gmail.com) (https://github.com/AlphaHydrae)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AlphaHydrae/eventful"
+  },
+  "main": "./src/eventful.js",
+  "directories": {
+    "spec": "./spec",
+    "src": "./src"
+  },
+  "devDependencies": {
+    "jshint": "~0.5.8",
+    "uglify-js": "~1.2.5",
+    "vows": "~0.6.1"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://raw.github.com/AlphaHydrae/eventful/master/LICENSE.txt"
+    }
+  ]
+}
