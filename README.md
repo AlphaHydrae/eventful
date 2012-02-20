@@ -36,11 +36,19 @@ How to use in a browser:
     <!-- direct link -->
     <script type='text/javascript' src='https://raw.github.com/AlphaHydrae/eventful/master/src/eventful.min.js'></script>
 
-    <!-- or with downloaded file -->
+    <!-- with downloaded file -->
     <script type='text/javascript' src='/assets/js/eventful.min.js'></script>
+
+How to install with <a href="http://npmjs.org/">npm</a>:
+
+    npm install eventful-ah
 
 How to use in node:
 
+    // if installed with npm
+    var EventEmitter = require('eventful-ah');
+
+    // if downloaded
     var EventEmitter = require('./lib/eventful.js');
 
 <a name="features"></a>
