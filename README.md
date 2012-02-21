@@ -69,7 +69,7 @@ ee.on('foo', function() {
   console.log('The foo event was emitted.');
 }).on('bar', function() {
   console.log('The bar event was emitted.');
-}).emit('foo').emit('bar');;
+}).emit('foo').emit('bar');
 ```
 
 <a name="feature_off"></a>
