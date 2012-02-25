@@ -74,12 +74,13 @@
     return this;
   };
 
-  EventEmitter.prototype.withNamespace = function(namespace) {
-    return new EventfulNamespace(this, namespace);
-  };
-
-  EventEmitter.prototype.withoutNamespace = function() {
-    return this;
+  EventEmitter.prototype.namespace = function(namespace) {
+    _checkNamespace(namespace);
+    if (namespace && namespace.length) {
+      return new EventfulNamespace(this, namespace);
+    } else {
+      return this;
+    }
   };
 
   EventEmitter.prototype._fireCallbacks = function(eventObject, args) {
@@ -195,6 +196,12 @@
     }
   }
 
+  function _checkNamespace(namespace) {
+    if (typeof(namespace) !== 'undefined' && typeof(namespace) !== 'string') {
+      throw new Error('Namespaces must be strings.');
+    }
+  }
+
   function _extend(parentClass, childClass) {
     for (var method in parentClass.prototype) {
       if (method.match(/^_?[a-z]/)) {
@@ -211,12 +218,13 @@
 
   _extend(EventEmitter, EventfulNamespace);
 
-  EventfulNamespace.prototype.withNamespace = function(namespace) {
-    return new EventfulNamespace(this._emitter, namespace);
-  };
-
-  EventfulNamespace.prototype.withoutNamespace = function() {
-    return this._emitter;
+  EventfulNamespace.prototype.namespace = function(namespace) {
+    _checkNamespace(namespace);
+    if (namespace && namespace.length) {
+      return new EventfulNamespace(this._emitter, namespace);
+    } else {
+      return this._emitter;
+    }
   };
 
   EventfulNamespace.prototype._wrapCallback = function(callback, eventName, options) {
