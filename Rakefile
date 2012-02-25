@@ -16,7 +16,7 @@ def script_path dep
 end
 
 desc 'Run test suite, validate and compress javascript.'
-task :build => [ :spec, :check, :copy_version_to_sources, :minify ]
+task :build => [ :spec, :check, :minify ]
 
 desc 'Validate javascript.'
 task :check => [ :validate_presence_of_deps ] do |t|
