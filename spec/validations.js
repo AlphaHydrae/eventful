@@ -25,6 +25,13 @@ vows.describe('Validations').addBatch({
       for (var i in invalid) {
         assert.throws(function() { topic.on(invalid[i], callback); }, Error);
       }
+    },
+
+    'should only accept strings as a namespace' : function(topic) {
+      var invalid = [ null, true, false, 2, [], {} ];
+      for (var i in invalid) {
+        assert.throws(function() { topic.namespace(invalid[i])}, Error);
+      }
     }
   }
 }).export(module);
