@@ -153,6 +153,19 @@ nee.emit('bar');
 nee.namespace('foo').emit('bar'); // #=> "The bar event was emitted in the foo namespace."
 ```
 
+Note that callbacks registered with no namespace will be called when emitting an event in any namespace.
+
+```js
+// register a callback on kung in no namespace
+nee.on('kung', function() {
+  console.log('The kung event was emitted.');
+});
+
+// the callback with be called by emitting kung in any namespace
+nee.namespace('foo').emit('kung'); // #=> "The kung event was emitted."
+nee.namespace('bar').emit('kung'); // #=> "The kung event was emitted."
+```
+
 ## License (MIT)
 
 Copyright (c) 2011 Alpha Hydrae
