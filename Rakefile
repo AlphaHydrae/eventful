@@ -38,7 +38,7 @@ end
 
 # version tasks
 RakeVersion::Tasks.new do |v|
-  v.copy 'src/eventful.js'
+  v.copy 'src/eventful.js', 'package.json'
 end
 
 task :validate_presence_of_deps do |t|
