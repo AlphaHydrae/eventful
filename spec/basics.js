@@ -11,12 +11,10 @@ vows.describe('Basics').addBatch({
       return new EventEmitter();
     },
 
-    'should respond to on, off, emit, withNamespace, withoutNamespace' : function(topic) {
+    'should respond to on, off, emit' : function(topic) {
       assert.isFunction(topic.on);
       assert.isFunction(topic.off);
       assert.isFunction(topic.emit);
-      assert.isFunction(topic.withNamespace);
-      assert.isFunction(topic.withoutNamespace);
     },
 
     'when called' : {

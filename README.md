@@ -60,6 +60,7 @@ Jump to:
 * <a href="#feature_off">removing callbacks</a>
 * <a href="#feature_arguments">passing arguments</a>
 * <a href="#feature_listing">listing callbacks</a>
+* <a href="#feature_namespaces">namespaces</a>
 
 <a name="feature_chaining"></a>
 All methods can be **chained**.
@@ -130,6 +131,39 @@ var callbacks = ee.on('fubar');
 
 // check its contents
 console.log(callbacks.length); // #=> 2
+```
+
+<a name="feature_namespaces"></a>
+You can register callback functions in a **namespace**, so that only events emitted with the same namespace will call them.
+
+```js
+// create an event emitter
+var nee = new EventEmitter();
+
+// register a callback in a namespace
+nee.namespace('foo').on('bar', function() {
+  console.log('The bar event was emitted in the foo namespace.');
+});
+
+// the callback is not called if you emit bar in another namespace or with no namespace
+nee.namespace('zoo').emit('bar');
+nee.emit('bar');
+
+// it is only called if you emit bar within the same namespace
+nee.namespace('foo').emit('bar'); // #=> "The bar event was emitted in the foo namespace."
+```
+
+Note that callbacks registered with no namespace will be called when emitting an event in any namespace.
+
+```js
+// register a callback on kung in no namespace
+nee.on('kung', function() {
+  console.log('The kung event was emitted.');
+});
+
+// the callback with be called by emitting kung in any namespace
+nee.namespace('foo').emit('kung'); // #=> "The kung event was emitted."
+nee.namespace('bar').emit('kung'); // #=> "The kung event was emitted."
 ```
 
 ## License (MIT)
