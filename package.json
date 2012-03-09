@@ -28,5 +28,8 @@
       "type": "MIT",
       "url": "https://raw.github.com/AlphaHydrae/eventful/master/LICENSE.txt"
     }
-  ]
+  ],
+  "scripts": {
+    "test": "vows --spec"
+  }
 }
