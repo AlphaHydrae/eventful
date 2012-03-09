@@ -7,4 +7,5 @@ source "http://rubygems.org"
 # Include everything needed to run rake, tests, features, etc.
 group :development do
   gem 'rake-version', '~> 0.2.0'
+  gem 'travis-lint', '~> 1.3.0'
 end
