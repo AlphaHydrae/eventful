@@ -4,8 +4,6 @@
 
 My personal flavor of a javascript event emitter. It can be used to listen to and emit events for event-based behavior in the browser or in <a href="http://nodejs.org/">node.js</a>. This readme contains <a href="#installation">installation</a> instructions and an overview of <a href="#features">features</a>.
 
-Eventful is tested with <a href="http://vowsjs.org/">Vows</a>.
-
 ```js
 // initialize an event emitter
 var ee = new EventEmitter();
@@ -22,7 +20,10 @@ ee.on('foo', fooCallback);
 ee.emit('foo'); // #=> "The foo event was emitted."
 ```
 
-Detailed API documentation will be coming soon.
+Eventful is tested with <a href="http://vowsjs.org/">Vows</a> and <a href="http://travis-ci.org/#!/AlphaHydrae/eventful">Travis CI</a>.
+
+* master [![Build Status](https://secure.travis-ci.org/AlphaHydrae/eventful.png?branch=master)](http://travis-ci.org/AlphaHydrae/eventful)
+* develop [![Build Status](https://secure.travis-ci.org/AlphaHydrae/eventful.png?branch=develop)](http://travis-ci.org/AlphaHydrae/eventful)
 
 <a name="installation"></a>
 ## Installation
